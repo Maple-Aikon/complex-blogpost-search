@@ -10,11 +10,11 @@ The widget is downloaded as an archive containg a folder. Upload the respective 
 2. Initiate the widget
 Add the following include to any page or template where you want the widget to be displayed.
 ```html
-{% include "/bc-widgets/complex-blogpost-search/cb-search.liquid" -%}
+{% include "/bc-widgets/complex-blogpost-search/init.liquid" -%}
 ```
 
 ### Prerequisites
-Already included in the **cb-search.liquid** file, some of these can be removed if already loaded in your template.
+Already included in the **init.liquid** file, some of these can be removed if already loaded in your template.
 
  - [jQuery](https://jquery.com/) v1.11.3
  - [Bootstrap](http://getbootstrap.com/) v3.3.6
