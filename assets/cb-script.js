@@ -14,14 +14,19 @@ $("select").on('select2:opening', function(e) {
 
 // Submits the form and gets results
 $searchForm.on("submit", function(event) {
-    $("#cb-results").load("/bc-widgets/complex-blogpost-search/cb-query.html?" + $(this).serialize() + " #cb-results");
+    console.log($(this).serialize());
     event.preventDefault();
+    if ( $(this).serialize() != "postTitle=") {
+        $("#cb-results").load("/bc-widgets/complex-blogpost-search/cb-query.html?" + $(this).serialize() + " #cb-results");
+    }
 });
 
 // Submits the form when clicking on the search result item name and clears the rest
 $postSearch.on("select2:selecting", function(e) {
     clearFields();
-    $searchForm.submit();
+    $postSearch.on("select2:select", function(e) {
+        $searchForm.submit();
+    });
 });
 
 // Visual hack to have the dropdown look like a simple dropdown and not a search box

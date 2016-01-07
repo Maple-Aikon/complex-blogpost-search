@@ -33,7 +33,7 @@ Just edit or remove parts of the results template in the *cb-results.liquid* fil
 For Liquid modifications follow the [Getting Started with Liquid](http://docs.businesscatalyst.com/developers/liquid/getting-started-with-liquid) for help.
 
 ### Modify the number of tags, categories, results
-Every {module_data} has a limit parameter that specifies how many items to be included from the total number of items returned by the module. The maximum value is 500.
+Every ```{module_data}``` has a limit parameter that specifies how many items to be included from the total number of items returned by the module. The maximum value is 500.
 
 ### Add more information on the live search
 You can add an image or description to the live search.
