@@ -1,0 +1,72 @@
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+{% comment %}Select2 - https://select2.github.io/{% endcomment %}
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+
+<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ done loading prerequisites -->
+
+{% comment %}Load Tags{% endcomment %}
+{module_data resource="tags" version="v3" fields="id,tagName" skip="0" limit="500" order="tagName" collection="myTags"}
+
+{% comment %}Load Categories, modify the parent id {% endcomment %}
+{% assign categoryParentId = 68636 -%}
+{module_data resource="categories" version="v3" where="\{'parentId':{{categoryParentId}}\}" skip="0" limit="500" order="category" collection="myCats"}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6">
+			<div id="cb-results">
+			{% comment %}The results will be loaded here{% endcomment %}
+			</div>
+		</div>
+		<div class="col-md-6">
+			<form id="searchForm" class="form-horizontal">
+				<div class="form-group">
+					<label for="postSearch" class="col-md-3 control-label">Live search</label>
+					<div class="col-md-9">
+						<select id="postSearch" name="postSearch" class="form-control"></select>
+					</div>
+				</div>
+				<hr>
+				<div class="form-group">
+					<label for="postTitle" class="col-md-3 control-label">Title</label>
+					<div class="col-md-9">
+						<input type="text" name="postTitle" class="form-control" placeholder="Post title" data-filter="postTitle">
+					</div>
+				</div>		
+				<div class="form-group">
+					<label for="tags.tagId" class="col-md-3 control-label">Tags</label>
+					<div class="col-md-9">
+						<select id="tags" name="tags.tagId" class="form-control" data-resource="tags" data-placeholder="Select tag/s" data-filter="tagId" multiple="true">
+						{% for item in myTags.items -%}
+							<option value="{{item.id}}">{{item.tagName}}</option>
+						{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="categories" class="col-md-3 control-label">Categories</label>
+					<div class="col-md-9">
+						<select id="categories" name="categories.categoryId" class="form-control" data-resource="categories" data-placeholder="Select category/s" data-filter="categoryId" multiple="true">
+						{% for item in myCats.items -%}
+							<option value="{{item.id}}">{{item.category}}</option>
+						{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="col-md-offset-3 col-md-9">
+					<button type="submit" id="searchButton" class="btn btn-default">Search</button>
+					{% comment %}<button type="reset" id="clearButton" onclick="javascript:clearFields()" class="btn btn-warning">Clear</button>{% endcomment %}
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="/bc-widgets/complex-blogpost-search/assets/cb-script.js" type="text/javascript"></script>

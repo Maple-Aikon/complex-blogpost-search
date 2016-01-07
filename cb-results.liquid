@@ -1,0 +1,77 @@
+{module_data resource="blogposts" version="v3" fields="id,blogId,postTitle,postBody,postFeaturedImage,releaseDate,postUrl,author,blog" skip="0" limit="20" {{queryString}} order="-releaseDate" collection="result"}
+<div class="row">
+	<div class="col-md-12">
+	{% if result.totalItemsCount > 0 -%}
+		{% for item in result.items -%}
+		<section class="blogpost-result panel panel-default">
+			<div class="blogpost-result-item item panel-body">
+				<!-- START Post title -->
+				<h3><a title="{{item.postTitle}}" href="{{item.postUrl}}"> {{item.postTitle}}</a></h3>
+				<!-- END Post title -->
+
+				<!-- START Post author -->
+				<div class="cb-Author">by <span class="author">{{ item.author["firstName"] }} {{ item.author["lastName"] }}</span></div>
+				<!-- END Post author -->
+
+				<!-- START Post date -->
+				<div class="cb-Date">on <span class="releaseDate">{{ item.releaseDate | date }}</span></div>
+				<!-- END Post date -->
+
+				<!-- START Post tags -->
+				<div class="cb-Tags">
+					{module_data resource="blogposts" version="v3" fields="tag" subresource="tags" resourceId="{{item.id}}" skip="0" limit="5" order="-objectId" collection="tagsCollection"}
+					{% if tagsCollection.totalItemsCount > 0 -%}
+					{% assign tags = tagsCollection.items | map: "tag" -%}
+					<div class="tags">
+						<small>
+							{% for tag in tags -%}
+							<a href="{{ item.blog.blogUrl }}/tag/{{ tag.tagName | replace: " ", "_" }}" title="{{tag.tagName}}">{{ tag.tagName | downcase }}</a>
+							{{ forloop.rindex | pluralize: '', ' | ' }}
+							{% endfor -%}
+						</small>	
+					</div>				
+					{% endif -%}
+				</div>
+				<!-- END Post tags -->
+
+				<!-- START Post categories -->
+				<div class="cb-Categories">
+					{module_data resource="blogposts" version="v3" fields="category" subresource="categories" resourceId="{{item.id}}" skip="0" limit="5" order="-objectId" collection="catsCollection"}
+					{% if catsCollection.totalItemsCount > 0 -%}
+					{% assign cats = catsCollection.items | map: "category" -%}
+					<small>
+						{% for cat in cats -%}
+						<a href="{{ item.blog.blogUrl }}/category/{{ cat.category | replace: " ", "_" }}" title="{{cat.category}}">{{ cat.category | upcase }}</a>
+						{{ forloop.rindex | pluralize: '', ' / ' }}
+						{% endfor -%}
+					</small>				
+					{% endif -%}
+				</div>
+				<!-- END Post categories -->
+
+				<!-- START Post image -->
+				<div class="cb-Image">
+					<a title="{{item.postTitle}}" href="{{item.postUrl}}">
+						{% if item.postFeaturedImage != "" -%}
+						<img src="{{item.postFeaturedImage}}?Action=thumbnail&amp;Width=150&amp;Height=112&amp;algorithm=fill_proportional" alt="{{item.title}}">
+						{% else -%}
+						<img src="http://placehold.it/150x112" alt="no-image">
+						{% endif -%}
+					</a>
+				</div>
+				<!-- END Post image -->
+
+				<!-- START Post body -->
+				<div class="cb-Body">
+					{% comment %}Post excerpt{% endcomment %}
+					<p>{{ item.postBody | truncatewords: 30 }}</p>
+				</div>
+				<!-- END Post body -->
+			</div>
+		</section>
+		{% endfor -%}
+	{% else -%}
+		<p>No results found</p>	
+	{% endif -%}
+	</div>
+</div>

@@ -1,0 +1,1 @@
+{module_data resource="blogposts" version="v3" fields="id,postTitle,postFeaturedImage,releaseDate" skip="0" limit="10" where="\{'$or':\[\{'postTitle':\{'$contains':'{{globals.get.q}}'\}\},\{'postBody':\{'$contains':'{{globals.get.q}}'\}\}\],'$and':\[\{'enabled':'true'\},\{'deleted':'false'\}\]\}" order="id" collection="myData"}{{myData|json}}

@@ -1,0 +1,28 @@
+<div id="cb-results">
+
+{% comment %}Query constructor, please do not modify{% endcomment %}
+{% assign queryString = 'where="\{' | append: "'$and':\[" -%}{% comment %}Opening tags{% endcomment %}
+{% for params in globals.get -%}
+	{% if params[0] != "ID" -%}{% comment %}We don't need it{% endcomment %}
+		{% if params[0] == "postTitle" -%}{% comment %}string so should be "contains"{% endcomment %}
+				{% capture queryString -%}{{queryString}}\{'{{params[0]}}':\{'$contains':'{{params[1]}}'\}\},{% endcapture -%}
+		{% endif -%}
+		{% if params[0] == "postSearch" -%}{% comment %}it has the id of the post{% endcomment %}
+				{% capture queryString -%}{{queryString}}\{'id':'{{params[1]}}'\},{% endcapture -%}
+		{% endif -%}
+		{% if params[0] contains "." -%}{% comment %}array so it should be "in" {% endcomment %}
+			{% assign arr = params[1] -%}
+			{% if arr[0] -%}{% comment %}is array{% endcomment %}
+				{% capture queryString -%}{{queryString}}\{'{{params[0]}}':\{'$in':[{{params[1] | join: "," }}]\}\},{% endcapture -%}
+			{% else -%}
+				{% capture queryString -%}{{queryString}}\{'{{params[0]}}':'{{params[1]}}'\},{% endcapture -%}
+			{% endif -%}
+		{% endif -%}	
+	{%endif-%}
+{% endfor %}
+{% capture queryString -%}{{queryString}}\{'enabled':'true'\},\{'deleted':'false'\}{% endcapture -%}{% comment %}Global where clauses: enabled and deleted{% endcomment %}
+{% capture queryString -%}{{ queryString | append: '\]\}"' }}{% endcapture -%}{% comment %}Closing tags{% endcomment %}
+
+{% include "/bc-widgets/complex-blogpost-search/cb-results.liquid" -%}
+
+</div>
