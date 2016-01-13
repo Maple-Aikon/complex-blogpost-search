@@ -37,6 +37,7 @@ Every ```{module_data}``` has a limit parameter that specifies how many items to
 
 ### Add more information on the live search
 You can add an image or description to the live search.
+
 1. Check that the field you need is called in the ```{module_data}``` of *cb-live.html* (e.g. postFeaturedImage, postBody)
 2. Add them to the titles object in the HTMLtoDOM function in */assets/cb-script.js*
 ```javascript
