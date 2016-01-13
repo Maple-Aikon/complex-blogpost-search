@@ -40,23 +40,23 @@ You can add an image or description to the live search.
 
 1. Check that the field you need is called in the ```{module_data}``` of *cb-live.html* (e.g. postFeaturedImage, postBody)
 2. Add them to the titles object in the HTMLtoDOM function in */assets/cb-script.js*
-⋅⋅```javascript
-⋅⋅    $.map(json.items, function(item) {
-⋅⋅        titles.push({
-⋅⋅            id: item.id,
-⋅⋅            text: item.postTitle,
-⋅⋅            image: item.postFeaturedImage,
-⋅⋅            body: item.postBody
-⋅⋅        });
-⋅⋅    });
-⋅⋅```
+  ```javascript
+    $.map(json.items, function(item) {
+        titles.push({
+            id: item.id,
+            text: item.postTitle,
+            image: item.postFeaturedImage,
+            body: item.postBody
+        });
+    });
+```
 3. Format the live search results markup. This is done in formatResults function in */assets/cb-script.js*
-⋅⋅```javascript
-⋅⋅    var markup = "<div class='select2-result-repository clearfix'>" +
-⋅⋅        "<div class='select2-result-repository__meta'>" +
-⋅⋅        "<div class='select2-result-repository__title'>" + item.text + "</div>" +
-⋅⋅        "</div></div>";
-⋅⋅```
+  ```javascript
+    var markup = "<div class='select2-result-repository clearfix'>" +
+        "<div class='select2-result-repository__meta'>" +
+        "<div class='select2-result-repository__title'>" + item.text + "</div>" +
+        "</div></div>";
+```
 
 ### Version
 1.0.1
