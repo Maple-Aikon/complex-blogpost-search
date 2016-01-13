@@ -49,7 +49,8 @@ You can add an image or description to the live search.
             body: item.postBody
         });
     });
-```3. Format the live search results markup. This is done in formatResults function in */assets/cb-script.js*
+```
+3. Format the live search results markup. This is done in formatResults function in */assets/cb-script.js*
 ```javascript
     var markup = "<div class='select2-result-repository clearfix'>" +
         "<div class='select2-result-repository__meta'>" +
